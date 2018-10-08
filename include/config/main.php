@@ -7,7 +7,7 @@
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'中企',
+	'name'=>'huala',
     'language' => 'zh_cn',
     'charset' => 'UTF-8',
 
@@ -73,23 +73,23 @@ return array(
         ),
         'db' => array(
             'class' => 'FDbConnection',
-            'connectionString' => "mysql:host=localhost;dbname=salary;port=3306",
+            'connectionString' => "mysql:host=localhost;dbname=huala;port=3306",
             'emulatePrepare' => true,
             'username' => 'root',
             'password' => 'Hello0617',
             'charset' => 'UTF8',
-            'tablePrefix' => 'oa_',
+            'tablePrefix' => 'h_',
             'enableParamLogging' => YII_DEBUG,
             //'schemaCacheID' => 'cache',
             'schemaCachingDuration' => FF_DEBUG ? 0 : 1800,
             'slaves' => array(
                 array(
-                    'connectionString' => "mysql:host=localhost;dbname=salary;port=3306",
+                    'connectionString' => "mysql:host=localhost;dbname=huala;port=3306",
                     'emulatePrepare' => true,
                     'username' => 'root',
                     'password' => 'Hello0617',
                     'charset' => 'UTF8',
-                    'tablePrefix' => 'oa_',
+                    'tablePrefix' => 'h_',
                     'enableParamLogging' => YII_DEBUG,
                     'schemaCacheID' => 'cache',
                     'schemaCachingDuration' => 0,

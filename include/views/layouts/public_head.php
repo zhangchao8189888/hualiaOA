@@ -1,11 +1,13 @@
 <!--Header-part-->
 <style>
     .head-box{width: 219px;background: #fff;}
-    .head-logo{width: 125px;margin-left: 40px;}
+    .head-logo{    width: 223px;
+        margin-left: -6px;
+        height: 77px;}
 </style>
 <div id="header">
     <div  class = "head-box">
-        <img id="logo" width='220px' src="<?php echo FF_STATIC_BASE_URL; ?>/images/com_logo.jpg" class="animated fadeInRight head-logo" />
+        <img id="logo" width='220px' src="<?php echo FF_STATIC_BASE_URL; ?>/images/huala.png" class="animated fadeInRight head-logo" />
     </div>
 </div>
 <!--close-Header-part--> 

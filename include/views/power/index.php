@@ -49,7 +49,7 @@
     </div>
 </div>
 
-<script src="/upload/common-js/zq.admin.js" type="text/javascript"></script>
+<script src="<?php echo FF_STATIC_BASE_URL;?>/common-js/zq.admin.js" type="text/javascript"></script>
 
 <!--修改--START---->
 <div class="modal hide" id="modal-edit-event">

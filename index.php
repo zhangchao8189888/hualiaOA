@@ -12,7 +12,7 @@ if (isset($_SERVER["HTTPS"])&&$_SERVER["HTTPS"]=="on")
 {
     define('FF_DOMAIN', 'https://' . $_SERVER['HTTP_HOST']);
 } else {
-    define('FF_DOMAIN', 'http://' . 'www.zhongqijiye.com:8082');
+    define('FF_DOMAIN', 'http://' . '182.92.81.13/hualaOA');
 }
 
 
@@ -34,9 +34,9 @@ if (in_array($_SERVER['SERVER_ADDR'], $arr)) {
 
     ini_set('display_errors', 'on');
     error_reporting(E_ALL & ~E_NOTICE);
-    define('YII_DEBUG', false);
+    define('YII_DEBUG', true);
     define('YII_TRACE_LEVEL', 3);
-    $GLOBALS['debug'] =false;
+    $GLOBALS['debug'] =true;
     $config = FF_ROOT . '/include/config/test.php';
 } else {
 

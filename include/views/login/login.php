@@ -5,7 +5,7 @@
             <strong>登录失败!</strong> <?php echo $content;?> </div>
     <?php }?>
     <form id="loginform" class="form-vertical" action="<?php echo FF_DOMAIN;?>/login/getLogin" method="post">
-        <div class="control-group normal_text"> <h3>新工资管理系统<!--<img src="img/logo.png" alt="Logo" />--></h3></div>
+        <div class="control-group normal_text"> <h3>HuaLaOA<!--<img src="img/logo.png" alt="Logo" />--></h3></div>
         <div class="control-group">
             <div class="controls">
                 <div class="main_input_box">

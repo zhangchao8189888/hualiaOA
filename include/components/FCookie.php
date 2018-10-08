@@ -20,7 +20,7 @@ class FCookie
             $cookie->expire = time() + $time;
         }
         $cookie->secure = $_SERVER['SERVER_PORT'] == 443 ? 1 : 0;
-        $cookie->domain = '.zhongqijiye.com';
+        $cookie->domain = '182.92.81.13';
         Yii::app()->request->cookies[$name] = $cookie;
     }
 
