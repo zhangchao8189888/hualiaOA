@@ -1,5 +1,5 @@
 <div class="row-fluid">
-  <div id="footer" class="span12"> Copyright © 2013 zhongqijiye.com Inc. All Rights Reserved. 中企基业 版权所有 </div>
+  <div id="footer" class="span12"> Copyright © 2013 zhongqijiye.com Inc. All Rights Reserved. 哗啦科技 版权所有 </div>
 </div>
 
 <?php

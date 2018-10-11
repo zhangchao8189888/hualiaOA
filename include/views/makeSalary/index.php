@@ -89,7 +89,7 @@ $this->pageTitle = '首页';
         $(document).ready(function(){
             // === jQeury Gritter, a growl-like notifications === //
             $.gritter.add({
-                title:  '中企基业有你更精彩！',
+                title:  '哗啦科技有你更精彩！',
                 text: '期待您de意见，反馈邮箱：<br><br><a href="mailto:admin@aladdin-holdings.com">admin@aladdin-holdings.com</a>',
                 image:  'upload/img/demo/envelope.png',
                 sticky: true
