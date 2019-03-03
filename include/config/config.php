@@ -7,54 +7,22 @@
  */
 return array(
     'pageSize'  => 20,
-    'employ_status' => array(
-        '1' =>  '在职',
-        '2' =>  '离职',
-        '3' =>  '退休',
+    'loan_type_text' => array(
+        '1' =>  '信用贷款',
+        '2' =>  '房产一抵',
+        '3' =>  '车辆贷款',
     ),
-    'employ_type' => array(
-        0=> "未缴纳保险",
-        1 => "本市城镇职工",
-        2 => "外埠城镇职工",
-        3 => "本市农村劳动力",
-        4 => "外地农村劳动力",
-        5 => "本市农民工",
-        6 => "外地农民工",
+    'mortgage_type_text' => array(
+        '1' =>  '大额信用卡',
+        '2' =>  '无需抵押',
+        '3' =>  '房屋抵押等',
     ),
-    'employ_type_val' => array(
-        '未缴纳保险'     => 0,
-        '本市城镇职工'   => 1,
-        '外埠城镇职工'   => 2,
-        '本市农村劳动力' => 3,
-        '外地农村劳动力' => 4,
-        '本市农民工'    => 5,
-        '外地农民工'    => 6,
+    'month_rate_type_text' => array(
+        '1' =>  '等额本息',
+        '2' =>  '等额本金',
     ),
-    'employ_sex' => array(
-        1 => "男",
-        2 => "女",
+    'identity_type_text' => array(
+        '1' =>  '上班族',
+        '2' =>  '企业主',
     ),
-    'salary_head' => array(
-        1 => "男",
-        2 => "女",
-    ),
-    'uploadPath' => '/var/www/zc.orderStorage/upload/',
-    // 工资审核状态
-    'examine_status' => array(
-        '0' => '未申请发放',
-        '1' => '申请批准中',
-        '2' => '批准通过',
-        '3' => '未通过',
-    ),
-    // 工资发放状态
-    'grant_status' => array(
-        0 => '暂无审核',
-        1 => '处理审核',
-        2 => '同意发放',
-        3 => '拒绝发放',
-    ),
-    'salary_type' => array(
-        'SALARY_ER' => 5,
-        'SALARY_NIAN' => 6,
-    )
 );

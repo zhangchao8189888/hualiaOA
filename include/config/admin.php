@@ -13,6 +13,17 @@ return array(
                 ),
             ),
         ),
+        '2' => array(
+            'controller' => 'product',//
+            'resource'   => '产品管理',
+            'icon'		 =>	'envelope-alt',
+            'son'        => array(
+                '1'	=> array(
+                    'action' 	=> 'productList',
+                    'resource'	=> '产品管理',
+                ),
+            ),
+        ),
         '10' => array(
 			'controller' => 'power',
 			'resource'   => '权限管理',

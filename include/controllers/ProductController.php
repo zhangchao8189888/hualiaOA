@@ -12,9 +12,7 @@ class ProductController extends FController
     public function __construct($id, $module = null) {
 
         parent::__construct($id, $module);
-        $this->productType_model = new ProductType();
         $this->product_model = new Product();
-        $this->productPublish_model = new ProductPublish();
 
     }
 //注释
@@ -101,11 +99,8 @@ class ProductController extends FController
      * 产品列表
      */
     public function actionProductList () {
-        $search_earn_days = trim($this->request->getParam('search_earn_days') ? $this->request->getParam('search_earn_days') : '');
         $product_name = trim($this->request->getParam('search_product_name') ? $this->request->getParam('search_product_name') : '');
         $product_type = trim($this->request->getParam('search_product_type') ? $this->request->getParam('search_product_type') : '');
-        $_product_type=$this->productType_model->findByAttributes(array('type_name' => $product_type));
-        $product_type_id = $_product_type->id;
 
         //分页参数
         $page = ($this->request->getParam('page') > 0) ? (int) $this->request->getParam('page') : 1;
@@ -118,13 +113,10 @@ class ProductController extends FController
         //查询
         $where ='1=1';
         if ($product_type) {
-            $where.= " and product_type_id = '$product_type_id' ";
+            $where.= " and product_type_id = '$product_type' ";
         }
         if ($product_name) {
-            $where.= " and product_name like :product_name ";
-        }
-        if ($search_earn_days) {
-            $where.= " and earn_days <= '$search_earn_days' ";
+            $where.= " and name like :product_name ";
         }
 
         $condition_arr['condition'] = $where;
@@ -139,18 +131,15 @@ class ProductController extends FController
         $pages->setCurrent($page);
         $pages->makePages();
 
-        $data['proTypeList'] = $this->productType_model->findAll();
         $data['dataList'] = $this->product_model->findAll($condition_arr);
 
-        $data['guarantee_levels'] = FConfig::item('config.guarantee_levels');
-        $data['invest_start_types'] = FConfig::item('config.invest_start_types');
-        $data['invest_date_types'] = FConfig::item('config.invest_date_types');
-        $data['invest_issue_types'] = FConfig::item('config.invest_issue_types');
-        $data['config_earn_days'] = FConfig::item('config.search_earn_days');
+        $data['loan_type_text'] = FConfig::item('config.loan_type_text');
+        $data['mortgage_type_text'] = FConfig::item('config.mortgage_type_text');
+        $data['month_rate_type_text'] = FConfig::item('config.month_rate_type_text');
+        $data['identity_type_text'] = FConfig::item('config.identity_type_text');
 
         $data['product_type'] = $product_type;
         $data['product_name'] = $product_name;
-        $data['earn_days'] = $search_earn_days;
 
         $data['page'] = $pages;
 
