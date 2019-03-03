@@ -9,15 +9,15 @@
  * @property integer $business_id
  * @property integer $loan_type
  * @property integer $star
- * @property integer $city
+ * @property string $city
  * @property integer $mortgage_type
  * @property integer $money_least
  * @property integer $money_max
  * @property integer $period_least
  * @property integer $period_max
  * @property integer $month_rate_type
- * @property integer $month_rate_least
- * @property integer $month_rate_max
+ * @property string $month_rate_least
+ * @property string $month_rate_max
  * @property string $service_cost
  * @property integer $lend_day
  * @property string $apply_condition
@@ -54,8 +54,9 @@ class Product extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('loan_type, star, create_time, update_time', 'required'),
-			array('business_id, loan_type, star, city, mortgage_type, money_least, money_max, period_least, period_max, month_rate_type, month_rate_least, month_rate_max, lend_day, identity_type, income_type, salary, cur_work_duration, social_and_fund, business_location, business_year, credit_type, is_house, is_car', 'numerical', 'integerOnly'=>true),
-			array('name', 'length', 'max'=>150),
+			array('business_id, loan_type, star, mortgage_type, money_least, money_max, period_least, period_max, month_rate_type, lend_day, identity_type, income_type, salary, cur_work_duration, social_and_fund, business_location, business_year, credit_type, is_house, is_car', 'numerical', 'integerOnly'=>true),
+			array('name, city', 'length', 'max'=>150),
+			array('month_rate_least, month_rate_max', 'length', 'max'=>11),
 			array('service_cost', 'length', 'max'=>200),
 			array('apply_condition, need_info', 'length', 'max'=>500),
 			// The following rule is used by search().
@@ -137,15 +138,15 @@ class Product extends CActiveRecord
 		$criteria->compare('business_id',$this->business_id);
 		$criteria->compare('loan_type',$this->loan_type);
 		$criteria->compare('star',$this->star);
-		$criteria->compare('city',$this->city);
+		$criteria->compare('city',$this->city,true);
 		$criteria->compare('mortgage_type',$this->mortgage_type);
 		$criteria->compare('money_least',$this->money_least);
 		$criteria->compare('money_max',$this->money_max);
 		$criteria->compare('period_least',$this->period_least);
 		$criteria->compare('period_max',$this->period_max);
 		$criteria->compare('month_rate_type',$this->month_rate_type);
-		$criteria->compare('month_rate_least',$this->month_rate_least);
-		$criteria->compare('month_rate_max',$this->month_rate_max);
+		$criteria->compare('month_rate_least',$this->month_rate_least,true);
+		$criteria->compare('month_rate_max',$this->month_rate_max,true);
 		$criteria->compare('service_cost',$this->service_cost,true);
 		$criteria->compare('lend_day',$this->lend_day);
 		$criteria->compare('apply_condition',$this->apply_condition,true);

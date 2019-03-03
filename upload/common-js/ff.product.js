@@ -61,45 +61,27 @@ $(function(){
         );
     });
     $(".btn_add").click(function(){
-        var data = {
-
-        };
-        data.product_code = $('#product_code').val();
+        var data = {};
         data.product_name = $('#product_name').val();
-        data.product_type_id = $('#product_type_id').val();
-        data.yield_rate_year = $('#yield_rate_year').val();
-        data.fund_min_val = $('#fund_min_val').val();
-        data.guarantee_level = $('#guarantee_level').val();
-        data.upper_limit = $('#upper_limit').val();
-        data.invest_issue_type = $('#invest_issue_type').val();
-        data.invest_start_type = $('#invest_start_type').val();
-        data.invest_date_type = $('#invest_date_type').val();
-        data.invest_days = $('#invest_days').val();
-        data.earn_days = $('#earn_days').val();
-        data.invest_start_date = $('#invest_start_date').val();
-        data.invest_end_date = $('#invest_end_date').val();
-        data.earn_days_sign = $('#earn_days_sign').val();
+        data.loan_type = $('#loan_type').val();
+        data.star = $('#star').val();
+        data.mortgage_type = $('#mortgage_type').val();
+        data.money_least = $('#money_least').val();
+        data.money_max = $('#money_max').val();
+        data.period_least = $('#period_least').val();
+        data.period_max = $('#period_max').val();
+        data.month_rate_type = $('#month_rate_type').val();
+        data.month_rate_least = $('#month_rate_least').val();
+        data.month_rate_max = $('#month_rate_max').val();
+        data.service_cost = $('#service_cost').val();
+        data.lend_day = $('#lend_day').val();
+        data.apply_condition = $('#apply_condition').val();
+        data.need_info = $('#need_info').val();
         $.ajax(
             {
                 type:"post",
-                url: "/product/productAdd",
-                data:{
-                    product_code : data.product_code,
-                    product_name : data.product_name,
-                    product_type_id : data.product_type_id,
-                    yield_rate_year : data.yield_rate_year,
-                    fund_min_val : data.fund_min_val,
-                    guarantee_level : data.guarantee_level,
-                    upper_limit : data.upper_limit,
-                    invest_issue_type : data.invest_issue_type,
-                    invest_start_type : data.invest_start_type,
-                    invest_date_type : data.invest_date_type,
-                    invest_days : data.invest_days,
-                    earn_days : data.earn_days,
-                    invest_start_date : data.invest_start_date,
-                    invest_end_date : data.invest_end_date,
-                    earn_days_sign : data.earn_days_sign
-                },
+                url: GLOBAL_CF.DOMAIN+"/product/productAdd",
+                data: data,
                 dataType : "json",
                 success:function(data){
                     if(data.status > 100000){

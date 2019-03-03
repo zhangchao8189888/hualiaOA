@@ -151,50 +151,26 @@ class ProductController extends FController
     public function actionProductAdd(){
         $earn_days_sign = '';
         $product_name           = $this->request->getParam('product_name');
-        $product_type_id        = $this->request->getParam('product_type_id');
-        $yield_rate_year        = $this->request->getParam('yield_rate_year');
-        $fund_min_val           = $this->request->getParam('fund_min_val');
-        $guarantee_level        = $this->request->getParam('guarantee_level');
-        $upper_limit            = $this->request->getParam('upper_limit');
-        $invest_start_type    = $this->request->getParam('invest_start_type');
-        if($invest_start_type ==1){
+        $loan_type       = $this->request->getParam('loan_type');
+        $star        = $this->request->getParam('star');
+        $mortgage_type          = $this->request->getParam('mortgage_type');
+        $money_least        = $this->request->getParam('money_least');
+        $money_max            = $this->request->getParam('money_max');
+        $period_least    = $this->request->getParam('period_least');
+        $period_max    = $this->request->getParam('period_max');
+        $month_rate_type    = $this->request->getParam('month_rate_type');
+        $month_rate_least    = $this->request->getParam('month_rate_least');
+        $month_rate_max    = $this->request->getParam('month_rate_max');
+        $service_cost    = $this->request->getParam('service_cost');
+        $lend_day    = $this->request->getParam('lend_day');
+        $apply_condition    = $this->request->getParam('apply_condition');
+        $need_info    = $this->request->getParam('need_info');
 
-            $invest_date_type     = $this->request->getParam('invest_date_type');
-            $invest_days          = $this->request->getParam('invest_days');
-            $earn_days          = $this->request->getParam('earn_days');
-        }else{
-
-            $invest_start_date    = $this->request->getParam('invest_start_date');
-            $invest_end_date    = $this->request->getParam('invest_end_date');
-            $startDate=strtotime($invest_start_date);
-            $endDate=strtotime($invest_end_date);
-            $days=round(($endDate-$startDate)/3600/24) ;
-            $earn_days=$days;
-        }
-        if($earn_days<30){
-            $earn_days_sign .= $earn_days.'天';
-        }else{
-            $earn_days_sign .=ceil($earn_days/30).'个月';
-        }
-        $invest_issue_type    = $this->request->getParam('invest_issue_type');
         $create_time            = $update_time = FF_DATE_TIME;
 
-        //找类型编码
-        $condition_type = array(
-            'select'=>'MAX(id) as id',
-        );
-        $resMax = $this->product_model->find($condition_type);
-        $result = $this->productType_model->findByPk($product_type_id);
-        $maxId = $resMax->id;
-        if(empty($resMax->id)){
-            $maxId = 1;
-        } else {
-            $maxId += 1;
-        }
-        $product_code = $result->type_code.$maxId;
 
         $condition_attr = array(
-            'condition'=>"product_name=:product_name",
+            'condition'=>"name=:product_name",
             'params' => array(':product_name'=>$product_name,),
         );
         $count = $this->product_model->count($condition_attr);
@@ -204,21 +180,21 @@ class ProductController extends FController
             Yii::app()->end(FHelper::json($response['content'], $response['status']));
         }
         $condition_attr = array(
-            'product_code'          =>  $product_code,
-            'product_name'          =>  $product_name,
-            'product_type_id'       =>  $product_type_id,
-            'yield_rate_year'       =>  $yield_rate_year,
-            'fund_min_val'          =>  $fund_min_val,
-            'guarantee_level'       =>  $guarantee_level,
-            'upper_limit'           =>  $upper_limit,
-            'invest_issue_type'   =>  $invest_issue_type,
-            'invest_start_type'   =>  $invest_start_type,
-            'invest_date_type'    =>  $invest_date_type,
-            'invest_days'         =>  $invest_days,
-            'earn_days'         =>  $earn_days,
-            'invest_start_date'   =>  $invest_start_date,
-            'invest_end_date'   =>  $invest_end_date,
-            'earn_days_sign'   =>  $earn_days_sign,     //投资期限类型
+            'name'          =>  $product_name,
+            'loan_type'          =>  $loan_type,
+            'star'       =>  $star,
+            'mortgage_type'       =>  $mortgage_type,
+            'money_least'          =>  $money_least,
+            'money_max'       =>  $money_max,
+            'period_least'           =>  $period_least,
+            'period_max'   =>  $period_max,
+            'month_rate_type'   =>  $month_rate_type,
+            'month_rate_least'    =>  $month_rate_least,
+            'month_rate_max'         =>  $month_rate_max,
+            'service_cost'         =>  $service_cost,
+            'lend_day'   =>  $lend_day,
+            'apply_condition'   =>  $apply_condition,
+            'need_info'   =>  $need_info,
 
             'create_time'           =>  $create_time,
             'update_time'           =>  $update_time,
@@ -226,6 +202,8 @@ class ProductController extends FController
 
         $this->product_model->attributes = $condition_attr;
         $res = $this->product_model->save();
+        print_r($res);
+        print_r($this->product_model);
         if ($res) {
             $response['status'] = 100000;
             $response['content'] = 'success';

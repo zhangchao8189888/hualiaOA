@@ -116,7 +116,7 @@ $typeList=$data['typeList'];
 
 
 
-<script src="<?php echo FF_STATIC_BASE_URL;?>/common-js/ff.product.js" type="text/javascript"></script>
+<script src="<?php echo FF_STATIC_BASE_URL;?>/common-js/ff.product.js?1" type="text/javascript"></script>
 
 <!--产品添加--START---->
 <div class="modal hide" id="modal-add-event">
@@ -135,9 +135,15 @@ $typeList=$data['typeList'];
                 </div>
             </div>
             <div class="control-group">
+                <label class="control-label"><em class="red-star"></em>星级 :</label>
+                <div class="controls">
+                    <input type="text" id="star" class="span3" name="star" placeholder="星级">
+                </div>
+            </div>
+            <div class="control-group">
                 <label class="control-label">贷款分类 :</label>
                 <div class="controls">
-                    <select id="product_type_id">
+                    <select id="loan_type">
                         <?php
                         if (!empty($loan_type_text)) {
                             foreach($loan_type_text as $key=>$val){
@@ -151,7 +157,7 @@ $typeList=$data['typeList'];
             <div class="control-group">
                 <label class="control-label">产品类型 :</label>
                 <div class="controls">
-                    <select id="product_type_id">
+                    <select id="mortgage_type">
                         <?php
                         if (!empty($mortgage_type_text)) {
                             foreach($mortgage_type_text as $key=>$val){
@@ -165,22 +171,22 @@ $typeList=$data['typeList'];
             <div class="control-group">
                 <label class="control-label">贷款金额 :</label>
                 <div class="controls">
-                    <input type="text" class="span1" id="money_least" placeholder="贷款金额"><span class="month_tips">-</span>
-                    <input type="text" class="span1" id="money_max" placeholder="贷款金额">
+                    <input type="text" class="span1" id="money_least" placeholder="贷款金额min"><span class="month_tips">-</span>
+                    <input type="text" class="span1" id="money_max" placeholder="贷款金额max">（万）
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label">贷款期限 :</label>
                 <div class="controls">
-                    <input type="text" class="span1" id="period_least" placeholder="贷款金额"><span class="month_tips">-</span>
-                    <input type="text" class="span1" id="money_max" placeholder="贷款金额">
+                    <input type="text" class="span1" id="period_least" placeholder="贷款期限最小值"><span class="month_tips">-</span>
+                    <input type="text" class="span1" id="period_max" placeholder="贷款期限最大值">（月）
                 </div>
             </div>
 
             <div class="control-group">
                 <label class="control-label">月利率类型 :</label>
                 <div class="controls">
-                    <select id="product_type_id">
+                    <select id="month_rate_type">
                         <?php
                         if (!empty($month_rate_type_text)) {
                             foreach($month_rate_type_text as $key=>$val){
@@ -195,26 +201,20 @@ $typeList=$data['typeList'];
             <div class="control-group">
                 <label class="control-label">月利率 :</label>
                 <div class="controls">
-                    <input type="text" class="span1" id="month_rate_least" placeholder="贷款金额"><span class="month_tips">-</span>
-                    <input type="text" class="span1" id="month_rate_max" placeholder="贷款金额">
+                    <input type="text" class="span1" id="month_rate_least" placeholder="月利率最小值"><span class="month_tips">-</span>
+                    <input type="text" class="span1" id="month_rate_max" placeholder="月利率最大值">
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label">服务费 :</label>
                 <div class="controls">
-                    <input type="text" id="service_cost" placeholder="起投资金">元
+                    <input type="text" id="service_cost" placeholder="服务费">元
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label">放款时间 :</label>
                 <div class="controls">
-                    <input type="text" id="lend_day" placeholder="项目总金额">元
-                </div>
-            </div>
-            <div class="control-group" id="div_tEND_days">
-                <label class="control-label">投资期限 :</label>
-                <div class="controls">
-                    <input id="earn_days" type="text" class="span1" placeholder="天数">
+                    <input type="text" id="lend_day" placeholder="项目总金额">天
                 </div>
             </div>
             <div class="control-group" id="div_tEND_days">
