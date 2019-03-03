@@ -24,6 +24,17 @@ return array(
                 ),
             ),
         ),
+        '3' => array(
+            'controller' => 'approval',//
+            'resource'   => '审批管理',
+            'icon'   => 'envelope-alt',
+            'son'        => array(
+                '1' => array(
+                    'action'  => 'approvalList',
+                    'resource' => '审批管理',
+                ),
+            ),
+        ),
         '10' => array(
 			'controller' => 'power',
 			'resource'   => '权限管理',

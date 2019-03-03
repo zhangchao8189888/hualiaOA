@@ -132,6 +132,8 @@ class ProductController extends FController
         $pages->makePages();
 
         $data['dataList'] = $this->product_model->findAll($condition_arr);
+        $data['business_list'] =  Business::model()->findAll();
+
 
         $data['loan_type_text'] = FConfig::item('config.loan_type_text');
         $data['mortgage_type_text'] = FConfig::item('config.mortgage_type_text');
@@ -165,6 +167,7 @@ class ProductController extends FController
         $lend_day    = $this->request->getParam('lend_day');
         $apply_condition    = $this->request->getParam('apply_condition');
         $need_info    = $this->request->getParam('need_info');
+        $business_id    = $this->request->getParam('business_id');
 
         $create_time            = $update_time = FF_DATE_TIME;
 
@@ -195,6 +198,7 @@ class ProductController extends FController
             'lend_day'   =>  $lend_day,
             'apply_condition'   =>  $apply_condition,
             'need_info'   =>  $need_info,
+            'business_id'   =>  $business_id,
 
             'create_time'           =>  $create_time,
             'update_time'           =>  $update_time,
@@ -202,8 +206,6 @@ class ProductController extends FController
 
         $this->product_model->attributes = $condition_attr;
         $res = $this->product_model->save();
-        print_r($res);
-        print_r($this->product_model);
         if ($res) {
             $response['status'] = 100000;
             $response['content'] = 'success';
@@ -241,47 +243,45 @@ class ProductController extends FController
 
         $id = $this->request->getParam('id');
         $product_name           = $this->request->getParam('product_name');
-        $product_type_id        = $this->request->getParam('product_type_id');
-        $yield_rate_year        = $this->request->getParam('yield_rate_year');
-        $fund_min_val           = $this->request->getParam('fund_min_val');
-        $guarantee_level        = $this->request->getParam('guarantee_level');
-        $upper_limit            = $this->request->getParam('upper_limit');
-        $invest_issue_type    = $this->request->getParam('invest_issue_type');
-        $invest_start_type    = $this->request->getParam('invest_start_type');
-        $invest_start_date    = $this->request->getParam('invest_start_date');
-        $invest_end_date    = $this->request->getParam('invest_end_date');
-        $earn_days          = $this->request->getParam('earn_days');
-        if($invest_start_type==2){
-            $startDate=strtotime($invest_start_date);
-            $endDate=strtotime($invest_end_date);
-            $days=ceil(($endDate-$startDate)/3600/24) ;
-            $earn_days=$days;
-        }
-        $invest_date_type     = $this->request->getParam('invest_date_type');
-        $invest_days          = $this->request->getParam('invest_days');
-        $earn_days_sign          = $this->request->getParam('earn_days_sign');
-        $create_time            = $update_time = FF_DATE_TIME;
+        $loan_type       = $this->request->getParam('loan_type');
+        $star        = $this->request->getParam('star');
+        $mortgage_type          = $this->request->getParam('mortgage_type');
+        $money_least        = $this->request->getParam('money_least');
+        $money_max            = $this->request->getParam('money_max');
+        $period_least    = $this->request->getParam('period_least');
+        $period_max    = $this->request->getParam('period_max');
+        $month_rate_type    = $this->request->getParam('month_rate_type');
+        $month_rate_least    = $this->request->getParam('month_rate_least');
+        $month_rate_max    = $this->request->getParam('month_rate_max');
+        $service_cost    = $this->request->getParam('service_cost');
+        $lend_day    = $this->request->getParam('lend_day');
+        $apply_condition    = $this->request->getParam('apply_condition');
+        $need_info    = $this->request->getParam('need_info');
+        $business_id_up    = $this->request->getParam('business_id_up');
+        $update_time = FF_DATE_TIME;
 
         $condition_attr = array(
-            'product_name'          =>  $product_name,
-            'product_type_id'       =>  $product_type_id,
-            'yield_rate_year'       =>  $yield_rate_year,
-            'fund_min_val'          =>  $fund_min_val,
-            'guarantee_level'       =>  $guarantee_level,
-            'upper_limit'           =>  $upper_limit,
-            'invest_issue_type'   =>  $invest_issue_type,
-            'invest_start_type'   =>  $invest_start_type,
-            'invest_date_type'    =>  $invest_date_type,
-            'invest_days'         =>  $invest_days,
-            'earn_days'         =>  $earn_days,
-            'invest_start_date'   =>  $invest_start_date,
-            'invest_end_date'   =>  $invest_end_date,
-            'earn_days_sign'   =>  $earn_days_sign,
-            'create_time'           =>  $create_time,
-            'update_time'           =>  $update_time,
+            'name'          =>  $product_name,
+            'loan_type'       =>  $loan_type,
+            'star'       =>  $star,
+            'mortgage_type'          =>  $mortgage_type,
+            'money_least'       =>  $money_least,
+            'money_max'           =>  $money_max,
+            'period_least'   =>  $period_least,
+            'period_max'   =>  $period_max,
+            'month_rate_type'   =>  $month_rate_type,
+            'month_rate_least'   =>  $month_rate_least,
+            'month_rate_max'    =>  $month_rate_max,
+            'service_cost'         =>  $service_cost,
+            'lend_day'         =>  $lend_day,
+            'apply_condition'   =>  $apply_condition,
+            'need_info'   =>  $need_info,
+            'business_id_up'   =>  $business_id_up,
+            'update_time'   =>  $update_time,
         );
 
         $res = $this->product_model->updateByPk($id,$condition_attr);
+        //print_r($this->product_model);
         if ($res) {
             $response['status'] = 100000;
             $response['content'] = 'success';

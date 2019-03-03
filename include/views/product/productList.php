@@ -68,6 +68,7 @@ $typeList=$data['typeList'];
                             <tr>
                                 <th class="tl" width="4%"><div>ID</div></th>
                                 <th class="tl"><div>产品名称</div></th>
+                                <th class="tl"><div>贷款机构</div></th>
                                 <th class="tl"><div>贷款分类</div></th>
                                 <th class="tl"><div>星级</div></th>
                                 <th class="tl"><div>城市</div></th>
@@ -85,10 +86,15 @@ $typeList=$data['typeList'];
                             <tbody  class="tbodays">
                             <?php if($count == 0){?>
                                 <tr><td colspan="10">没有符合条件记录</td></tr>
-                            <?php }else {  foreach ($dataList as $k => $row){?>
+                            <?php }else {  foreach ($dataList as $k => $row){
+                                $b_res = Business::model()->findByPk($row['business_id']);
+
+                                //$row['business_name'] = $b_res->name;
+                                ?>
                                 <tr >
                                     <td><div><?php echo $row['id'];?></div></td>
                                     <td><div><?php echo $row['name'];?></div></td>
+                                    <td><div><?php echo $b_res->name;?></div></td>
                                     <td><div><?php echo $loan_type_text[$row['loan_type']];?></div></td>
                                     <td><div><?php echo $row['star'];?></div></td>
                                     <td><div><?php echo $row['city'];?></div></td>
@@ -116,7 +122,7 @@ $typeList=$data['typeList'];
 
 
 
-<script src="<?php echo FF_STATIC_BASE_URL;?>/common-js/ff.product.js?1" type="text/javascript"></script>
+<script src="<?php echo FF_STATIC_BASE_URL;?>/common-js/ff.product.js?6" type="text/javascript"></script>
 
 <!--产品添加--START---->
 <div class="modal hide" id="modal-add-event">
@@ -138,6 +144,20 @@ $typeList=$data['typeList'];
                 <label class="control-label"><em class="red-star"></em>星级 :</label>
                 <div class="controls">
                     <input type="text" id="star" class="span3" name="star" placeholder="星级">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">贷款机构 :</label>
+                <div class="controls">
+                    <select id="business_id">
+                        <?php
+                        if (!empty($business_list)) {
+                            foreach($business_list as $key=>$val){
+                                echo '<option value="'.$val->id.'">'.$val->name.'</option>';
+                            }
+                        }
+                        ?>
+                    </select>
                 </div>
             </div>
             <div class="control-group">
@@ -262,133 +282,136 @@ $typeList=$data['typeList'];
     </div>
     <div class="modal-body">
         <form id="pro_update_form">
-
             <div class="form-horizontal form-alert">
                 <div class="control-group">
                     <label class="control-label"><em class="red-star">*</em>产品名称 :</label>
                     <div class="controls">
-                        <input type="text" id="update_product_name" class="span3" name="product_name" placeholder="产品名称">
+                        <input type="text" id="product_name_up" class="span3" name="product_name" placeholder="产品名称">
                         <input type="hidden" id="id" />
                     </div>
                 </div>
-                <!--<div class="control-group">
-                    <label class="control-label">产品类型 :</label>
+                <div class="control-group">
+                    <label class="control-label"><em class="red-star"></em>星级 :</label>
                     <div class="controls">
-                        <select id="update_product_type_id">
+                        <input type="text" id="star_up" class="span3" name="star" placeholder="星级">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">贷款机构 :</label>
+                    <div class="controls">
+                        <select id="business_id_up">
                             <?php
-/*                            if (!empty($proTypeList)) {
-                                foreach($proTypeList as $key=>$val){
-                                    echo '<option value="'.$val['id'].'">'.$val['type_name'].'</option>';
+                            if (!empty($business_list)) {
+                                foreach($business_list as $key=>$val){
+                                    echo '<option value="'.$val->id.'">'.$val->name.'</option>';
                                 }
                             }
-                            */?>
+                            ?>
                         </select>
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label">收益率 :</label>
+                    <label class="control-label">贷款分类 :</label>
                     <div class="controls">
-                        <input type="text" id="update_yield_rate_year" placeholder="收益率">（<em class="red-star">*例如：8.7% 填 8.7</em>）
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">起投资金 :</label>
-                    <div class="controls">
-                        <input type="text" id="update_fund_min_val" placeholder="起投资金">元
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">保障方式 :</label>
-                    <div class="controls">
-                        <select id="update_guarantee_level">
+                        <select id="loan_type_up">
                             <?php
-/*                            foreach($guarantee_levels as $k=>$v){
-                                */?>
-                                <option value="<?php /*echo $k*/?>"><?php /*echo $v*/?></option>
-                            <?php /*}*/?>
+                            if (!empty($loan_type_text)) {
+                                foreach($loan_type_text as $key=>$val){
+                                    echo '<option value="'.$key.'">'.$val.'</option>';
+                                }
+                            }
+                            ?>
                         </select>
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label">项目总金额 :</label>
+                    <label class="control-label">产品类型 :</label>
                     <div class="controls">
-                        <input type="text" id="update_upper_limit" placeholder="项目总金额">元
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">利息分配 :</label>
-                    <div class="controls">
-                        <select id="update_invest_issue_type">
+                        <select id="mortgage_type_up">
                             <?php
-/*                            foreach($invest_issue_types as $k=>$v){
-                                */?>
-                                <option value="<?php /*echo $k*/?>"><?php /*echo $v*/?></option>
-                            <?php /*}*/?>
+                            if (!empty($mortgage_type_text)) {
+                                foreach($mortgage_type_text as $key=>$val){
+                                    echo '<option value="'.$key.'">'.$val.'</option>';
+                                }
+                            }
+                            ?>
                         </select>
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label">起息日类别 :</label>
+                    <label class="control-label">贷款金额 :</label>
                     <div class="controls">
-                        <select id="update_invest_start_type">
-                            <?php
-/*                            foreach($invest_start_types as $k=>$v){
-                                */?>
-                                <option value="<?php /*echo $k*/?>"><?php /*echo $v*/?></option>
-                            <?php /*}*/?>
-                        </select>
+                        <input type="text" class="span1" id="money_least_up" placeholder="贷款金额min"><span class="month_tips">-</span>
+                        <input type="text" class="span1" id="money_max_up" placeholder="贷款金额max">（万）
                     </div>
                 </div>
-                <div class="control-group" id="update_div_tN_type">
-                    <label class="control-label">T+N类别 :</label>
+                <div class="control-group">
+                    <label class="control-label">贷款期限 :</label>
                     <div class="controls">
-                        <select id="update_invest_date_type">
-                            <?php
-/*                            foreach($invest_date_types as $k=>$v){
-                                */?>
-                                <option value="<?php /*echo $k*/?>"><?php /*echo $v*/?></option>
-                            <?php /*}*/?>
-                        </select>
+                        <input type="text" class="span1" id="period_least_up" placeholder="贷款期限最小值"><span class="month_tips">-</span>
+                        <input type="text" class="span1" id="period_max_up" placeholder="贷款期限最大值">（月）
                     </div>
-                </div>-->
+                </div>
 
-                <div class="control-group" id="update_div_tN_days">
-                    <label class="control-label">T+N天数 :</label>
+                <div class="control-group">
+                    <label class="control-label">月利率类型 :</label>
                     <div class="controls">
-                        <em style="text-align: left">T+</em><input id="update_invest_days" type="text" placeholder="天数">
+                        <select id="month_rate_type_up">
+                            <?php
+                            if (!empty($month_rate_type_text)) {
+                                foreach($month_rate_type_text as $key=>$val){
+                                    echo '<option value="'.$key.'">'.$val.'</option>';
+                                }
+                            }
+                            ?>
+                        </select>
                     </div>
                 </div>
-                <div class="control-group" id="update_div_tEND_days">
-                    <label class="control-label">投资期限 :</label>
+
+                <div class="control-group">
+                    <label class="control-label">月利率 :</label>
                     <div class="controls">
-                        <input id="update_earn_days" type="text" class="span1" placeholder="天数">
+                        <input type="text" class="span1" id="month_rate_least_up" placeholder="月利率最小值"><span class="month_tips">-</span>
+                        <input type="text" class="span1" id="month_rate_max_up" placeholder="月利率最大值">
                     </div>
                 </div>
-                <div class="control-group" style="display: none" id="update_div_invest_start_date">
+                <div class="control-group">
+                    <label class="control-label">服务费 :</label>
+                    <div class="controls">
+                        <input type="text" id="service_cost_up" placeholder="服务费">元
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">放款时间 :</label>
+                    <div class="controls">
+                        <input type="text" id="lend_day_up" placeholder="项目总金额">天
+                    </div>
+                </div>
+                <div class="control-group" id="div_tEND_days">
+                    <label class="control-label">申请条件 :</label>
+                    <div class="controls">
+                        <textarea id="apply_condition_up" name="apply_condition_up"></textarea>
+                    </div>
+                </div>
+                <div class="control-group" id="div_tEND_days">
+                    <label class="control-label">所需资料 :</label>
+                    <div class="controls">
+                        <textarea id="need_info_up" name="need_info_up"></textarea>
+                    </div>
+                </div>
+                <div class="control-group" style="display: none" id="div_invest_start_date_up">
                     <label class="control-label">固定日期开始 :</label>
                     <div class="controls">
-                        <input type="text" id="update_invest_start_date" name="invest_start_date"  onFocus="WdatePicker({isShowClear:false,readOnly:true,dateFmt:'yyyy-MM-dd',realDateFmt:'yyyy-MM-dd'})"/>
+                        <input type="text" id="invest_start_date_up" name="invest_start_date_up"  onFocus="WdatePicker({isShowClear:false,readOnly:true,dateFmt:'yyyy-MM-dd',realDateFmt:'yyyy-MM-dd'})"/>
                     </div>
-
                 </div>
-                <div class="control-group" style="display: none" id="update_div_invest_end_date">
+                <div class="control-group" style="display: none" id="div_invest_end_date_up">
                     <label class="control-label">固定日期结束 :</label>
                     <div class="controls">
-                        <input type="text" id="update_invest_end_date" name="invest_end_date"  onFocus="WdatePicker({isShowClear:false,readOnly:true,dateFmt:'yyyy-MM-dd',realDateFmt:'yyyy-MM-dd'})"/>
-                    </div>
-
-                </div>
-                <div class="control-group">
-                    <label class="control-label">投资期限标识 :</label>
-                    <div class="controls">
-                        <input type="text" id="update_earn_days_sign" placeholder="投资期限标识">
+                        <input type="text" id="invest_end_date" name="invest_end_date"  onFocus="WdatePicker({isShowClear:false,readOnly:true,dateFmt:'yyyy-MM-dd',realDateFmt:'yyyy-MM-dd'})"/>
                     </div>
                 </div>
-
-
             </div>
-
-
         </form>
     </div>
 
