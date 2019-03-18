@@ -24,6 +24,8 @@ return array(
     'identity_type_text' => array(
         '1' =>  '上班族',
         '2' =>  '企业主',
+        '3' =>  '个体户',
+        '4' =>  '其他',
     ),
     'apply_status' => array(
         '0' =>  '申请成功',

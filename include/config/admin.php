@@ -33,6 +33,10 @@ return array(
                     'action'  => 'approvalList',
                     'resource' => '审批管理',
                 ),
+                '2' => array(
+                    'action'  => 'entrustList',
+                    'resource' => '委托管理',
+                ),
             ),
         ),
         '10' => array(

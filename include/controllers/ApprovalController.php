@@ -6,11 +6,13 @@
 class ApprovalController extends FController
 {
     private $userPro_model;
+    private $entrust_model;
 
     public function __construct($id, $module = null) {
 
         parent::__construct($id, $module);
         $this->userPro_model = new UserPro();
+        $this->entrust_model = new Entrust();
 
     }
 //注释
@@ -106,4 +108,51 @@ class ApprovalController extends FController
         Yii::app()->end(FHelper::json($response['content'], $response['status']));
     }
 
+    /**
+     * 一键委托列表
+     */
+    public function actionEntrustList () {
+        $product_name = trim($this->request->getParam('search_product_name') ? $this->request->getParam('search_product_name') : '');
+
+        //分页参数
+        $page = ($this->request->getParam('page') > 0) ? (int) $this->request->getParam('page') : 1;
+        $page_size = ($this->request->getParam('size') > 0) ? (int) $this->request->getParam('size') : FConfig::item('config.pageSize');
+
+        $condition_arr = array(
+            'limit' => $page_size,
+            'offset' => ($page - 1) * $page_size ,
+        );
+
+        $where ='1=1';
+        $paramsArr = array();
+        if ($product_name) {
+            $where.= " and t3.name like :product_name ";
+            $paramsArr[':product_name'] = $product_name;
+        }
+
+        // sql
+        $connection = Yii::app()->h_db;
+        $findSql = "select t1.* from h_entrust t1 where {$where} order by t1.id desc limit {$condition_arr['offset']},{$condition_arr['limit']}";
+        $command = $connection->createCommand($findSql);
+        $result = $command->query($paramsArr);
+
+        //分页
+        $data['count'] = $this->entrust_model-> count($condition_arr);
+        $pages = new FPagination($data['count']);
+        $pages->setPageSize($page_size);
+        $pages->setCurrent($page);
+        $pages->makePages();
+
+        $data['dataList'] = $result;
+
+        $data['identity_config'] = FConfig::item('config.identity_type_text');
+//        echo '<pre>';print_r($data);exit;
+
+
+        $data['page'] = $pages;
+//        echo '<pre>';
+//        print_r($data['dataList'][0]['']);exit;
+
+        $this->render('entrustList',$data);
+    }
 }
