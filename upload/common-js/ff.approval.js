@@ -5,13 +5,15 @@ $(function(){
     $(".approval").click(function(){
         var id = $(this).attr("data-id");
         var status = $(this).attr("data-status");
+        var loantype = $(this).attr("data-loantype");
         $.ajax(
             {
                 type: "post",
                 url: GLOBAL_CF.DOMAIN+"/approval/updateStatus",
                 data: {
                     id:id,
-                    status: status
+                    status: status,
+                    loantype: loantype,
                 },
                 dataType: "json",
                 success: function(data){

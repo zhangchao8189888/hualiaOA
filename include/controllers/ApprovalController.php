@@ -28,6 +28,8 @@ class ApprovalController extends FController
      */
     public function actionApprovalList () {
         $product_name = trim($this->request->getParam('search_product_name') ? $this->request->getParam('search_product_name') : '');
+        $loan_type = trim($this->request->getParam('search_loan_type') ? $this->request->getParam('search_loan_type') : '');
+//        var_dump($loan_type);exit;
 
         //分页参数
         $page = ($this->request->getParam('page') > 0) ? (int) $this->request->getParam('page') : 1;
@@ -47,7 +49,11 @@ class ApprovalController extends FController
 
         // sql
         $connection = Yii::app()->h_db;
-        $findSql = "select t1.id as user_pro_id,t1.user_id, t1.money, t1.pro_id, t1.period, t2.name as user_name, t2.phone, t3.name as pro_name,group_concat(t1.`status` order by t1.`status`) as status_list,group_concat(t1.`update_time` order by t1.`update_time`) as update_time_list from h_user_pro t1 left join h_user t2 on t2.id=t1.user_id left join h_product t3 on t3.id=t1.pro_id where {$where} group by t1.pro_id,t1.user_id order by t1.id desc limit {$condition_arr['offset']},{$condition_arr['limit']}";
+        if ($loan_type == 2) {
+            $findSql = "select t1.id as user_pro_id,t1.user_id, t1.money, t1.pro_id, t1.period,t1.loan_type, t2.name as user_name, t2.phone, t3.name as pro_name,group_concat(t1.`status` order by t1.`status`) as status_list,group_concat(t1.`update_time` order by t1.`update_time`) as update_time_list from h_user_pro t1 left join h_user t2 on t2.id=t1.user_id left join h_product_house t3 on t3.id=t1.pro_id where {$where} group by t1.pro_id,t1.user_id order by t1.id desc limit {$condition_arr['offset']},{$condition_arr['limit']}";
+        } else {
+            $findSql = "select t1.id as user_pro_id,t1.user_id, t1.money, t1.pro_id, t1.period,t1.loan_type, t2.name as user_name, t2.phone, t3.name as pro_name,group_concat(t1.`status` order by t1.`status`) as status_list,group_concat(t1.`update_time` order by t1.`update_time`) as update_time_list from h_user_pro t1 left join h_user t2 on t2.id=t1.user_id left join h_product_loan t3 on t3.id=t1.pro_id where {$where} group by t1.pro_id,t1.user_id order by t1.id desc limit {$condition_arr['offset']},{$condition_arr['limit']}";
+        }
 //        print_r($findSql);exit;
         $command = $connection->createCommand($findSql);
         $result = $command->query($paramsArr);
@@ -63,6 +69,7 @@ class ApprovalController extends FController
 
         $data['status_config'] = FConfig::item('config.apply_status');
 //        echo '<pre>';print_r($data);exit;
+        $data['searchLoanType'] = $loan_type;
 
 
         $data['page'] = $pages;
@@ -92,6 +99,7 @@ class ApprovalController extends FController
             'house_location'    => $result['house_location'],
             'status'            => $status,
             'update_time'       => date('Y-m-d H:i:s'),
+            'loan_type'         => $result['loan_type'],
         );
 
         $this->userPro_model->attributes = $condition_attr;

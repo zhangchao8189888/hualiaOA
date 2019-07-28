@@ -36,11 +36,11 @@ class UserPro extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('update_time', 'required'),
-			array('user_id, recommend_base_id, credit_type, money, period, urgent, is_house, house_location, status', 'numerical', 'integerOnly'=>true),
+			array('user_id, recommend_base_id, credit_type, money, period, urgent, is_house, house_location, status, loan_type', 'numerical', 'integerOnly'=>true),
 			array('pro_id', 'length', 'max'=>500),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, user_id, pro_id, recommend_base_id, credit_type, money, period, urgent, is_house, house_location, status, update_time', 'safe', 'on'=>'search'),
+			array('id, user_id, pro_id, recommend_base_id,loan_type, credit_type, money, period, urgent, is_house, house_location, status, update_time', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -68,7 +68,8 @@ class UserPro extends CActiveRecord
 			'credit_type' => 'Credit Type',
 			'money' => 'Money',
 			'period' => 'Period',
-			'urgent' => 'Urgent',
+            'urgent' => 'Urgent',
+            'loan_type' => 'Loan Type',
 			'is_house' => 'Is House',
 			'house_location' => 'House Location',
 			'status' => 'Status',

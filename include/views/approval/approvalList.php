@@ -30,6 +30,11 @@ $typeList=$data['typeList'];
         <form name="search-form" class="search-form" action="/approval/approvalList">
             <div class="search-message">
                 产品名称 ：<input type="text" value="<?php echo $product_name;?>" name="search_product_name" /><br />
+                产品类型 ：
+                <select name="search_loan_type">
+                    <option value="1" <?php echo $searchLoanType==1 || empty($searchLoanType) ? 'selected' : '' ?>>信用贷</option>
+                    <option value="2" <?php echo $searchLoanType==2 ? 'selected' : '' ?>>房贷</option>
+                </select>
                 <input type="submit" class="search-mobile btn btn-primary" value="查找" />
             </div>
         </form>
@@ -84,7 +89,7 @@ $typeList=$data['typeList'];
                                         if (isset($status_config[$nextStatus])) {
                                             $opText = $status_config[$nextStatus];
                                             $class = $maxStatus==2 ? 'btn-success' : ($maxStatus==1 ? 'btn-primary' : '');
-                                            echo "<a title='{$opText}' href='javascript:void();' class='approval btn {$class}' data-id='{$row['user_pro_id']}' data-status='{$nextStatus}'>{$opText}</a>";
+                                            echo "<a title='{$opText}' href='javascript:void();' class='approval btn {$class}' data-id='{$row['user_pro_id']}' data-status='{$nextStatus}' data-loantype='{$row['loan_type']}'>{$opText}</a>";
                                         } else {
                                             echo "已放款";
                                         }
